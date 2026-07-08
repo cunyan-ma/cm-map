@@ -1,0 +1,116 @@
+.mineral-info {
+    position: fixed;
+    left: 16px;
+    bottom: 269px;
+    width: 280px;
+    max-height: calc(100vh - 269px - 80px);
+    background: #111111;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+    padding: 0 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1200;
+    overflow-y: auto;
+    text-align: left;
+    line-height: 1;
+}
+
+.mineral-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 15px;
+    /* Keep the × pinned at the top while the panel body scrolls under it */
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #111111;
+    padding: 16px 0 8px;
+}
+
+.mineral-info-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    color: #cccccc;
+}
+
+.mineral-info-description {
+    font-weight: 700;
+    color: #cccccc;
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.mineral-info-subtitle {
+    font-weight: 700;
+    color: #cccccc;
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.mineral-info-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.mineral-info-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 11px;
+    color: #cccccc;
+}
+
+.mineral-info-value {
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.mineral-info-note {
+    font-size: 10px;
+    color: #888888;
+    margin-top: 2px;
+}
+
+@media (max-width: 900px) {
+    .mineral-info {
+        left: 8px;
+        top: 86px;
+        bottom: 114px;
+        width: 150px;
+        max-height: none;
+        padding: 0 8px 8px;
+        gap: 6px;
+        border-radius: 4px;
+    }
+
+    .mineral-info-header {
+        padding: 8px 0 6px;
+        font-size: 12px;
+    }
+
+    .mineral-info-description,
+    .mineral-info-subtitle {
+        font-size: 10px;
+    }
+
+    .mineral-info-close {
+        font-size: 13px;
+    }
+
+    .mineral-info-list li {
+        font-size: 9px;
+    }
+}

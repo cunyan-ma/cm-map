@@ -1,0 +1,44 @@
+.method-container {
+    box-sizing: border-box;
+    /* Standard page padding, matches the Database page */
+    padding: 80px 40px 40px;
+    max-width: 900px;
+    color: #e0e0e0;
+}
+
+.method-container h1 {
+    margin: 0 0 12px 0;
+    text-align: left;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.method-container h2 {
+    margin-top: 20px;
+    margin-bottom: 8px;
+    text-align: left;
+    font-size: 18px;
+    color: #ffffff;
+    scroll-margin-top: 80px;
+}
+
+.method-container p,
+.method-container ul {
+    line-height: 1.6;
+    color: #cccccc;
+    text-align: left;
+}
+
+.method-container ul {
+    padding-left: 20px;
+}
+
+.method-container a {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.method-container a:hover {
+    color: #6ff0a5;
+}

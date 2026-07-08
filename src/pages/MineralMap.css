@@ -1,0 +1,20 @@
+.mineralmap {
+    display: flex;
+    height: 100vh;
+}
+
+/* Map area. The bottom padding reserves room for the desktop bottom bar so the
+   Leaflet attribution / nodes aren't hidden behind it. */
+.map-wrap {
+    flex: 1;
+    position: relative;
+    padding-bottom: 150px;
+}
+
+/* On mobile the bottom bar collapses to small floating controls, so the map
+   can use the full height. */
+@media (max-width: 900px) {
+    .map-wrap {
+        padding-bottom: 0;
+    }
+}

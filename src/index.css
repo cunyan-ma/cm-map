@@ -1,0 +1,59 @@
+:root {
+  /* Green theme. Node colors: sales (white) → refining (light green) → mining (dark green). */
+  --node-mining:   #158a3f;  /* dark green  — mining nodes (circle) */
+  --node-refining: #8ce06a;  /* light green — refining nodes (square) */
+  --node-sales:    #ffffff;  /* white       — sales nodes (triangle) */
+  --accent:        #3ddc84;  /* green accent for links / active / highlights (AA-safe on dark) */
+
+  font: 18px/145% Helvetica, Arial, sans-serif;
+  letter-spacing: 0.18px;
+  color-scheme: dark;
+  color: #cccccc;
+  background: #0a0a0a;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+/* Visible focus ring for keyboard navigation. :focus-visible fires only for
+   keyboard focus (not mouse clicks), so mouse users never see the outline. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Match the page background so any letterboxed space outside the world tiles
+   blends in instead of showing Leaflet's default grey. Leaflet's own stylesheet
+   is imported after this file, so !important is needed to win the cascade. */
+.leaflet-container {
+  background: #0a0a0a !important;
+}
+
+/* Drop the default white box Leaflet puts behind divIcon markers so our SVG
+   shapes (squares / triangles) float cleanly over the map. */
+.node-marker {
+  background: none;
+  border: none;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+p {
+  margin: 0;
+}

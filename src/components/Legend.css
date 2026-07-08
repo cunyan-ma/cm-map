@@ -1,0 +1,93 @@
+.legend {
+    position: fixed;
+    /* Sit below the fixed NavBar (top-right) so the two don't overlap. */
+    top: 120px;
+    right: 40px;
+    z-index: 1099;
+    background: #111111;
+    border-radius: 2px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    padding: 8px 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 140px;
+    box-sizing: border-box;
+}
+
+.legend-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: #ffffff;
+    margin-bottom: 2px;
+    text-align: left;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 0.8;
+    font-size: 12px;
+    color: #cccccc;
+    text-align: left;
+}
+
+.legend-swatch {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+/* Shaped (square / triangle) swatches drawn as inline SVG: cancel the circle
+   clip so their corners aren't cropped. */
+.legend-swatch-shape {
+    border-radius: 0;
+    overflow: visible;
+    background: none;
+    border: none;
+}
+
+.legend-swatch-mining {
+    background: #158a3f;
+    border: 1px solid #158a3f;
+}
+
+.legend-note {
+    font-size: 10px;
+    color: #888888;
+    text-align: left;
+    margin-top: 2px;
+}
+
+@media (max-width: 900px) {
+    .legend {
+        top: 8px;
+        right: 8px;
+        padding: 5px 8px 8px;
+        gap: 4px;
+        min-width: 0;
+        border-radius: 2px;
+    }
+
+    .legend-title {
+        font-size: 11px;
+    }
+
+    .legend-item {
+        gap: 5px;
+        font-size: 9px;
+        line-height: 1;
+    }
+
+    .legend-swatch {
+        width: 9px;
+        height: 9px;
+    }
+
+    .legend-note {
+        font-size: 8px;
+    }
+}

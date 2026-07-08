@@ -1,0 +1,99 @@
+.bottombar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    z-index: 1200;
+    pointer-events: none;
+}
+
+.bottombar-inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+    box-sizing: border-box;
+    pointer-events: auto;
+    background: #0a0a0a;
+    padding: 12px 40px;
+    /* Fixed height so the blurb can never push the bar up into the map. The JS
+       in BottomBar.jsx drops paragraphs before the blurb would overflow this. */
+    height: 230px;
+    overflow: hidden;
+}
+
+.bottombar-title {
+    flex-shrink: 0;
+    font-family: Impact, Helvetica;
+    font-weight: 900;
+    font-size: 50px;
+    line-height: 1.1;
+    text-align: left;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.bottombar-title-highlight {
+    color: #3ddc84;
+}
+
+.bottombar-description-box {
+    display: flex;
+    padding: 16px;
+    width: 500px;
+}
+
+.bottombar-description {
+    flex: 1;
+    width: 100px;
+    text-align: left;
+    font-size: 15px;
+    line-height: 145%;
+    color: #e0e0e0;
+}
+
+/* On mobile the title + blurb are hidden, so the bar collapses to just the
+   "Search by" control pinned to the bottom-left over the map. */
+@media (max-width: 900px) {
+    .bottombar {
+        justify-content: flex-start;
+    }
+
+    .bottombar-inner {
+        width: auto;
+        background: transparent;
+        padding: 0 0 8px 8px;
+        gap: 6px;
+        align-items: flex-start;
+        height: auto;
+        overflow: visible;
+    }
+
+    .bottombar-title,
+    .bottombar-description-box {
+        display: none;
+    }
+
+    .bottombar-inner > div:last-child {
+        margin-left: 0 !important;
+    }
+
+    .search-box {
+        min-width: 0;
+        padding: 6px 10px;
+        gap: 2px;
+        border-radius: 3px;
+    }
+
+    .search-box-title {
+        font-size: 10px;
+        margin-bottom: 1px;
+    }
+
+    .search-box-item {
+        font-size: 10px;
+    }
+}
