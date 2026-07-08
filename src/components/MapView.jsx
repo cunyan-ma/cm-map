@@ -40,6 +40,11 @@ function radiusFor(perc) {
     return Math.max(MIN_R, Math.min(MAX_R, r))
 }
 
+// Sales is a mockup for now: its "size" field isn't accurate, so every sales
+// triangle is drawn at the same fixed radius — a flat marker of "these are the
+// most notable concentration sites", not a proportional symbol.
+const SALES_R = 9
+
 // Same-country nodes from different layers/minerals share a centroid, so nudge
 // each apart: layer shifts longitude, mineral index shifts latitude. Keeps
 // overlapping nodes legible without distorting geography much.
@@ -113,7 +118,10 @@ function MapView({ nodes = [], selectedMineral = null, onSelectMineral = () => {
     // Apply highlight/dim styles for a given mineral (or default when null).
     const applyMineralStyles = useCallback((mineral) => {
         markersRef.current.forEach(({ marker, node }) => {
-            if (!mineral) {
+            if (node.mineral == null) {
+                // Mineral-agnostic layer (sales) — always shown, never dimmed.
+                applyStyle(marker, DEFAULTS[node.layer])
+            } else if (!mineral) {
                 applyStyle(marker, DEFAULTS[node.layer])
             } else {
                 applyStyle(marker, node.mineral === mineral ? HIGHLIGHT[node.layer] : DIMMED[node.layer])
@@ -156,15 +164,20 @@ function MapView({ nodes = [], selectedMineral = null, onSelectMineral = () => {
         markersRef.current.forEach(({ marker }) => map.removeLayer(marker))
         markersRef.current = []
 
-        // Mineral → index, for the small lat offset that separates overlapping nodes.
-        const minerals = [...new Set(nodes.map(n => n.mineral))].sort()
+        // Mineral → index, for the small lat offset that separates overlapping
+        // nodes. Sales nodes have mineral: null and are excluded here (they use
+        // their own real coordinates, no offset).
+        const minerals = [...new Set(nodes.map(n => n.mineral).filter(Boolean))].sort()
         const mineralIndex = Object.fromEntries(minerals.map((m, i) => [m, i]))
 
         nodes.forEach(node => {
             const color = COLORS[node.layer]
             const style = DEFAULTS[node.layer]
-            const r = radiusFor(node.perc)
-            const [dLat, dLng] = offsetFor(node.layer, mineralIndex[node.mineral], minerals.length)
+            // Mining/refining scale by share; sales is fixed-size (mockup data).
+            const r = node.layer === 'sales' ? SALES_R : radiusFor(node.perc)
+            const [dLat, dLng] = node.layer === 'sales'
+                ? [0, 0]  // sales sit at their real city coordinates
+                : offsetFor(node.layer, mineralIndex[node.mineral], minerals.length)
             const pos = [node.lat + dLat, node.lng + dLng]
 
             let marker
@@ -179,9 +192,16 @@ function MapView({ nodes = [], selectedMineral = null, onSelectMineral = () => {
                 marker = L.marker(pos, { icon: makeShapeIcon(shape, color, r * 2, style) })
             }
 
-            marker.on('mouseover', () => applyMineralStyles(node.mineral))
-            marker.on('mouseout', () => applyMineralStyles(selectedMineralRef.current))
-            marker.on('click', () => onSelectMineral(node.mineral))
+            if (node.mineral != null) {
+                // Mineral nodes drive the hover/click highlight-by-mineral.
+                marker.on('mouseover', () => applyMineralStyles(node.mineral))
+                marker.on('mouseout', () => applyMineralStyles(selectedMineralRef.current))
+                marker.on('click', () => onSelectMineral(node.mineral))
+            } else {
+                // Sales sites aren't mineral-keyed; just label them on hover.
+                const label = node.city ? `${node.name} — ${node.city}` : node.name
+                marker.bindTooltip(label, { direction: 'top', offset: [0, -6] })
+            }
 
             marker.addTo(map)
             markersRef.current.push({ marker, node })
